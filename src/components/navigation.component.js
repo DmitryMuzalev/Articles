@@ -20,6 +20,7 @@ function tabClickHandler(event) {
     Array.from(this.$el.querySelectorAll('.tab')).forEach((tab) => {
       tab.classList.remove('active');
     });
+    
     this.tabs.forEach((t) => {
       t.component.hide();
     });

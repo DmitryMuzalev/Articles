@@ -3,7 +3,7 @@ export class Form {
     this.container = container;
     this.controls = controls;
   }
-  
+
   value() {
     const value = {};
     Object.keys(this.controls).forEach((control) => {
@@ -12,8 +12,15 @@ export class Form {
     return value;
   }
 
+  clear() {
+    Object.keys(this.controls).forEach((control) => {
+      this.container[control].value = '';
+    });
+  }
+
   isValid() {
     let isFormValid = true;
+
     Object.keys(this.controls).forEach((control) => {
       const validators = this.controls[control];
       let isValid = true;
@@ -21,8 +28,27 @@ export class Form {
         isValid = validator(this.container[control].value) && isValid;
       });
 
+      !isValid
+        ? setError(this.container[control])
+        : clearError(this.container[control]);
+
       isFormValid = isFormValid && isValid;
     });
+
     return isFormValid;
+  }
+}
+
+function setError($control) {
+  clearError($control);
+  const error = '<p class="validation-error" >Введены некорректные данные!</p>';
+  $control.classList.add('invalid');
+  $control.insertAdjacentHTML('afterend', error);
+}
+
+function clearError($control) {
+  $control.classList.remove('invalid');
+  if ($control.nextSibling) {
+    $control.closest('.form-control').removeChild($control.nextSibling);
   }
 }

@@ -58,20 +58,28 @@ function renderPost(post) {
 function buttonHandler(event) {
   const $el = event.target;
   const id = $el.dataset.id;
+  const title = $el.closest('.panel').querySelector('.panel-title').textContent; // моё решение
 
   if (id) {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    let titles = JSON.parse(localStorage.getItem('titles')) || []; // моё решение
+
     if (favorites.includes(id)) {
       $el.textContent = 'Сохранить';
       $el.classList.add('button-primary');
       $el.classList.remove('button-danger');
+
       favorites = favorites.filter((e) => e !== id);
+      titles = titles.filter((t) => t !== title); // моё решение
     } else {
       $el.textContent = 'Удалить';
       $el.classList.remove('button-primary');
       $el.classList.add('button-danger');
+
+      titles.push(title); // моё решение
       favorites.push(id);
     }
     localStorage.setItem('favorites', JSON.stringify(favorites));
+    localStorage.setItem('titles', JSON.stringify(titles)); // моё решение
   }
 }

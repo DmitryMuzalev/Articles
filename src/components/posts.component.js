@@ -1,5 +1,5 @@
 import { Component } from '../core/component';
-import { apiService } from '../service/api.serice';
+import { apiService } from '../service/api.service';
 import { TransformService } from '../service/transform.service';
 import { renderPost } from '../template/post.template';
 
